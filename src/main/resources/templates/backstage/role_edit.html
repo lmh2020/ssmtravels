@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org"></html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <title>修改用户</title>
+    <!--引入css文件-->
+    <th:block th:replace="backstage/common_resources::common_css"></th:block>
+    <!--引入js文件-->
+    <th:block th:replace="backstage/common_resources::common_js"></th:block>
+</head>
+
+<body class="hold-transition skin-purple sidebar-mini">
+<header th:replace="backstage/common_header::header"></header>
+<aside th:replace="backstage/common_aside::aside"></aside>
+<div class="wrapper">
+    <!--    <div class="content-wrapper">-->
+    <div class="content-wrapper">
+        <!-- 内容头部 -->
+        <section class="content-header">
+            <h1>
+                角色管理
+                <small>修改角色</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="@{/backstage/index}"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li><a href="@{/backstage/role/all}">角色管理</a></li>
+                <li class="active">角色列表</li>
+            </ol>
+        </section>
+        <!-- 内容头部 /-->
+        <!-- 正文区域 -->
+        <section class="content">
+            <form th:action="@{/backstage/role/update}" method="post">
+                <input type="hidden" th:value="${role.rid}" name="rid">
+                <div class="tab-pane" id="tab-common">
+                    <div class="row data-type">
+
+                        <div class="col-md-2 title">角色名称</div>
+                        <div class="col-md-4 data">
+                            <input type="text" class="form-control" name="roleName" placeholder="角色名称" th:value="${role.roleName}">
+                        </div>
+
+                        <div class="col-md-2 title">角色介绍</div>
+                        <div class="col-md-4 data">
+                            <input type="text" class="form-control" name="roleDesc" placeholder="角色介绍" th:value="${role.roleDesc}">
+                        </div>
+
+                        <div class="col-md-2 title"></div>
+                        <div class="col-md-10 data text-center">
+                            <button type="submit" class="btn bg-maroon" >保存</button>
+                            <button type="button" class="btn bg-default" onclick="history.back(-1);">返回</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <!-- 正文区域 /-->
+
+    </div>
+
+    <!--    </div>-->
+
+</div>
+
+<footer th:replace="backstage/common_footer::footer" ></footer>
+
+</body>
+
+</html>

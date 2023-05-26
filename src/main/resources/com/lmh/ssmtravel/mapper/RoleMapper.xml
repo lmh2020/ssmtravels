@@ -1,0 +1,20 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmh.ssmtravel.mapper.RoleMapper">
+
+    <select id="findRoleId" resultType="integer" parameterType="int" >
+        select rid
+        from admin_role
+        where pid = #{pid}
+    </select>
+    <!--    删除所有权限-->
+    <delete id="deleteAll">
+        delete from admin_role where rid=#{rid}
+    </delete>
+
+<!--    新增权限-->
+    <insert id="addPermission">
+        insert into  role_permission(rid,pid) values (#{rid},#{pid})
+    </insert>
+</mapper>

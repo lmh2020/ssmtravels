@@ -1,0 +1,51 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmh.ssmtravel.mapper.AdminMapper">
+    <resultMap id="adminMap" type="com.lmh.ssmtravel.pojo.Admin">
+        <id property="aid" column="aid"></id>
+        <result property="username" column="username"></result>
+        <collection property="roles" column="aid" ofType="com.lmh.ssmtravel.pojo.Role">
+            <result property="roleName" column="rolename"></result>
+            <result property="roleDesc" column="roleDesc"></result>
+            <collection property="permissions" column="rid" ofType="com.lmh.ssmtravel.pojo.Permission">
+                <result property="permissionName" column="permissionName"></result>
+                <result property="permissionDesc" column="permissionDesc"></result>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="findDesc" resultMap="adminMap" parameterType="int">
+        select *
+        from admin
+                 left JOIN admin_role on admin.aid = admin_role.aid
+                 left join role on role.rid = admin_role.aid
+                 left join role_permission on role.rid = role_permission.rid
+                 LEFT JOIN permission ON role_permission.pid = permission.pid
+        where admin.aid = #{aid}
+    </select>
+
+    <delete id="deleteAllRole" parameterType="int">
+        delete from admin_role where aid=#{aid}
+    </delete>
+    <insert id="addRole" >
+        insert  into admin_role (aid,rid) values (#{aid},#{rid})
+    </insert>
+
+
+    <select id="findAllPermission" resultType="com.lmh.ssmtravel.pojo.Permission" parameterType="string">
+        SELECT DISTINCT permission.*
+        FROM admin
+                 LEFT JOIN admin_role
+                           ON admin.aid = admin_role.aid
+                 LEFT JOIN role
+                           ON admin_role.rid = role.rid
+                 LEFT JOIN role_permission
+                           ON role.rid = role_permission.rid
+                 LEFT JOIN permission
+                           ON role_permission.pid = permission.pid
+        WHERE admin.username = #{username}
+          AND permission.pid is not null
+    </select>
+
+
+</mapper>

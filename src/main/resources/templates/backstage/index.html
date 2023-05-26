@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org"></html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <title>旅游网首页</title>
+    <!--引入css文件-->
+    <th:block th:replace="backstage/common_resources::common_css"></th:block>
+    <!--引入js文件-->
+    <th:block th:replace="backstage/common_resources::common_js"></th:block>
+</head>
+
+<body class="hold-transition skin-purple sidebar-mini">
+<!--页面头部-->
+<header th:replace="backstage/common_header::header"></header>
+<!--导航栏-->
+<aside th:replace="backstage/common_aside::aside"></aside>
+<!--页面空白-->
+<div class="wrapper">
+
+    <div class="content-wrapper">
+
+    </div>
+
+</div>
+    <footer th:replace="backstage/common_footer::footer"></footer>
+
+</body>
+
+</html>
