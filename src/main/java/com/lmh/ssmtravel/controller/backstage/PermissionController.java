@@ -6,6 +6,7 @@ import com.lmh.ssmtravel.mapper.PermissionMapper;
 import com.lmh.ssmtravel.pojo.Permission;
 import com.lmh.ssmtravel.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
     @RequestMapping("/all")
+    @PreAuthorize("hasAnyAuthority('/permission/all')")
     public ModelAndView findByPage(@RequestParam(defaultValue = "1") Integer page,
                                    @RequestParam(defaultValue = "10") Integer size){
         ModelAndView modelAndView=new ModelAndView();

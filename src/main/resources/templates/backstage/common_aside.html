@@ -1,4 +1,5 @@
-<html xmlns:th="www.thymeleaf.org"></html>
+<html xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <!-- 导航侧栏 -->
 <aside class="main-sidebar" th:fragment="aside">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -16,7 +17,8 @@
         <ul class="sidebar-menu">
             <li class="header">菜单</li>
 
-            <li id="admin-index"><a href="/backstage/index"><i class="fa fa-dashboard"></i> <span>首页</span></a>
+            <li id="admin-index">
+                <a href="/backstage/index"><i class="fa fa-dashboard"></i> <span>首页</span></a>
             </li>
             <!-- 菜单 -->
 
@@ -28,19 +30,19 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li id="admin">
-                        <a href="/backstage/admin/all">
+                    <li id="admin" >
+                        <a href="/backstage/admin/all" sec:authorize="hasAnyAuthority('/admin/all')">
                             <i class="fa fa-circle-o"></i> 用户管理
                         </a>
                     </li>
 
                     <li id="role">
-                        <a href="/backstage/role/all">
+                        <a href="/backstage/role/all" sec:authorize="hasAnyAuthority('/role/all')">
                             <i class="fa fa-circle-o"></i> 角色管理
                         </a>
                     </li>
 
-                    <li id="permission">
+                    <li id="permission" sec:authorize="hasAnyAuthority('/permission/all')">
                         <a href="/backstage/permission/all">
                             <i class="fa fa-circle-o"></i> 权限管理
                         </a>
