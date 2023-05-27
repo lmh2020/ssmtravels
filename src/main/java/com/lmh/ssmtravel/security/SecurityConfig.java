@@ -2,12 +2,14 @@ package com.lmh.ssmtravel.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 //Security配置类
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -25,9 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/backstage/admin_login").permitAll()// 登录页不需要认证
                 .antMatchers("/backstage/admin_fail").permitAll()// 登录失败不需要认证
-                .antMatchers("/backstage/admin/login").permitAll()// 登录controller不需要认证
+                .antMatchers("/backstage/admin/login").permitAll()// 登录不需要认证
                 .antMatchers("/**/*.css", "/**/*.js").permitAll()//放行静态资源
                 .antMatchers("/backstage/**").authenticated();//放行静态资源
+        //退出
         http.logout()
                 .logoutUrl("/backstage/admin/logout")
                 .logoutSuccessUrl("/backstage/admin_login")

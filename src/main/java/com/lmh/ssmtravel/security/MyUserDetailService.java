@@ -34,15 +34,15 @@ public class MyUserDetailService implements UserDetailsService {
         }
 
         // 2.授权
-//        List<Permission> permissions = adminService.findAllPermission(username);
-//        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-//        for (Permission permission : permissions) {
-//            grantedAuthorities.add(new SimpleGrantedAuthority(permission.getPermissionDesc()));
-//        }
+        List<Permission> permissions = adminService.findAllPermission(username);
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (Permission permission : permissions) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(permission.getPermissionDesc()));
+        }
         // 3.封装为UserDetails对象
         UserDetails userDetails = User.withUsername(admin.getUsername())
                 .password(admin.getPassword())
-                .authorities(new ArrayList<>())
+                .authorities(grantedAuthorities)
                 .build();
         // 4.返回封装好的UserDetails对象
         return userDetails;

@@ -5,6 +5,7 @@ import com.lmh.ssmtravel.bean.RoleWithStatus;
 import com.lmh.ssmtravel.pojo.Admin;
 import com.lmh.ssmtravel.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +19,7 @@ public class AdminController {
     private AdminService adminService;
 
     @RequestMapping("/all")
+    @PreAuthorize("hasAnyAuthority('/admin/all')")//权限控制
     public ModelAndView findByPages(@RequestParam(defaultValue = "1") int page,
                                     @RequestParam(defaultValue = "10") int size) {
         ModelAndView modelAndView = new ModelAndView();

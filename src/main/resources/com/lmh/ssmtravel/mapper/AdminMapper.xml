@@ -14,6 +14,7 @@
             </collection>
         </collection>
     </resultMap>
+
     <select id="findDesc" resultMap="adminMap" parameterType="int">
         select *
         from admin
