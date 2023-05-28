@@ -6,7 +6,7 @@
     <select id="findRoleId" resultType="integer" parameterType="int" >
         select rid
         from admin_role
-        where pid = #{pid}
+        where aid = #{aid}
     </select>
     <!--    删除所有权限-->
     <delete id="deleteAll">

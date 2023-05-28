@@ -14,7 +14,7 @@ public interface AdminMapper extends BaseMapper<Admin> {
     //删除用户所拥有的角色
     void deleteAllRole(Integer id);
     //给用户分配角色
-    void addRole(@Param("rid") Integer rid,@Param("pid") Integer pid );
+    void addRole(@Param("aid") Integer aid,@Param("rid") Integer rid );
     // 根据管理员名查询权限
     List<Permission> findAllPermission(String username);
 

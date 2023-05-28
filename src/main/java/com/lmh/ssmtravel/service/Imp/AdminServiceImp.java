@@ -12,6 +12,7 @@ import com.lmh.ssmtravel.pojo.Role;
 import com.lmh.ssmtravel.service.AdminService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class AdminServiceImp implements AdminService {
     private AdminMapper adminMapper;
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Override
     public Page<Admin> findByPage(int page, int size) {
@@ -32,6 +35,8 @@ public class AdminServiceImp implements AdminService {
 
     @Override
     public void add(Admin admin) {
+        //给密码加密
+        admin.setPassword(encoder.encode(admin.getPassword()));
         adminMapper.insert(admin);
     }
 
@@ -40,9 +45,18 @@ public class AdminServiceImp implements AdminService {
         Admin admin = adminMapper.selectById(id);
         return admin;
     }
+    //修改用户信息
 
     @Override
     public void update(Admin admin) {
+        //从数据库拿到旧的密码
+        String oldPassword = adminMapper.selectById(admin.getAid()).getPassword();
+        //新密码
+        String newPassword = admin.getPassword();
+        // 如果新密码不等于旧密码，对新密码进行加密
+        if (!oldPassword.equals(newPassword)){
+            admin.setPassword(encoder.encode(newPassword));
+        }
         adminMapper.updateById(admin);
 
     }

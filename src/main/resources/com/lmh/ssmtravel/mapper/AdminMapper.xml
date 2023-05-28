@@ -19,7 +19,7 @@
         select *
         from admin
                  left JOIN admin_role on admin.aid = admin_role.aid
-                 left join role on role.rid = admin_role.aid
+                 left join role on role.rid = admin_role.rid
                  left join role_permission on role.rid = role_permission.rid
                  LEFT JOIN permission ON role_permission.pid = permission.pid
         where admin.aid = #{aid}
