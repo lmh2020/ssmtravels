@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org"></html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <title>产品类型管理</title>
+    <!--引入css文件-->
+    <th:block th:replace="backstage/common_resources::common_css"></th:block>
+    <!--引入js文件-->
+    <th:block th:replace="backstage/common_resources::common_js"></th:block>
+</head>
+
+<body class="hold-transition skin-purple sidebar-mini">
+<header th:replace="backstage/common_header::header"></header>
+<aside th:replace="backstage/common_aside::aside"></aside>
+<div class="wrapper">
+    <!--    <div class="content-wrapper">-->
+    <div class="content-wrapper">
+        <!-- 内容头部 -->
+        <section class="content-header">
+            <h1>
+                产品类型管理
+                <small>全部产品类型</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="@{/backstage/index}"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li><a href="@{/backstage/category/all}">产品类型管理</a></li>
+                <li class="active">全部产品类型</li>
+            </ol>
+        </section>
+        <!-- 内容头部 /-->
+        <!-- 正文区域 -->
+        <section class="content">
+            <!-- .box-body -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">列表</h3>
+                </div>
+                <div class="box-body">
+                    <!-- 数据表格 -->
+                    <div class="table-box">
+                        <!--工具栏-->
+                        <div class="pull-left">
+                            <div class="form-group form-inline">
+                                <div class="btn-group">
+                                    <a th:href="@{/backstage/category_add}">
+                                        <button type="button" class="btn btn-default" title="新建">
+                                            <i class="fa fa-file-o"></i> 新建
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!--数据列表-->
+                        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+                            <thead>
+                            <tr>
+                                <th class="" style="padding-right:0px;">
+                                    <input id="selall" type="checkbox" class="icheckbox_square-blue">
+                                </th>
+                                <th>产品类型</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            <tr th:each="page:${CategoryPage.records}">
+                                <td><input name="ids" type="checkbox"></td>
+                                <td th:text="${page.cname}"></td>
+                                <td class="text-center">
+                                    <a th:href="@{/backstage/category/edit(cid=${page.cid})}" class="btn bg-olive btn-xs">修改</a>
+                                    <a th:href="@{/backstage/category/deleteCategory(cid=${page.cid})} "
+                                       class="btn bg-olive btn-xs">删除</a>
+                                </td>
+                            </tr>
+
+                        </table>
+                        <!--数据列表/-->
+                    </div>
+                    <!-- 数据表格 /-->
+
+                </div>
+                <!-- /.box-body -->
+
+                <!-- .box-footer-->
+                <div class="box-footer">
+                    <div class="pull-left">
+                        <div class="form-group form-inline">
+                            总共<span th:text="${CategoryPage.pages}"></span>页，
+                            共<span th:text="${CategoryPage.total}"></span> 条数据
+                        </div>
+                    </div>
+
+                    <div class="box-tools pull-right">
+                        <ul class="pagination"></ul>
+                    </div>
+
+                </div>
+                <!-- /.box-footer-->
+            </div>
+        </section>
+        <!-- 正文区域 /-->
+    </div>
+
+    <!--    </div>-->
+
+</div>
+
+<footer th:replace="backstage/common_footer::footer"></footer>
+
+<script th:inline="javascript">
+    var currentPage = [[${CategoryPage.current}]];
+    var pages = [[${CategoryPage.pages}]];
+    var context = [[${#servletContext.contextPath}]];
+
+    $(".pagination").bootstrapPaginator({
+        bootstrapMajorVersion: 3,// bootstrap版本
+        currentPage: currentPage,//当前页
+        totalPages: pages,//总页
+        numberOfPages: 5,//最多显示条数
+        itemTexts: function (type, page, current) {
+            switch (type) {
+                case "first":
+                    return "首页";
+                case "prev":
+                    return "上一页";
+                case "next":
+                    return "下一页";
+                case "last":
+                    return "末页";
+                case "page":
+                    return page;//页码参数
+            }
+        },
+        onPageClicked: function (event, originalEvent, type, page) {
+            location.href = context + "/backstage/category/all?page=" + page;
+        }
+
+    })
+</script>
+</body>
+
+</html>
